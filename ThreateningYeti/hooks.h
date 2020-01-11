@@ -14,9 +14,11 @@ namespace ty::hooks
 	typedef int (*on_cover_windows_t)();
 	typedef void (*lockdown_log_t)();
 	typedef decltype(&CreateFileA) create_file_t;
-	typedef BOOL(*check_foreground_window_t)();
+	typedef BOOL (*check_foreground_window_t)();
 	typedef decltype(&NtQuerySystemInformation) nt_query_system_information_t;
-	typedef struct __SYSTEM_PROCESS_INFORMATION {
+
+	typedef struct __SYSTEM_PROCESS_INFORMATION
+	{
 		ULONG NextEntryOffset;
 		ULONG NumberOfThreads;
 		LARGE_INTEGER WorkingSetPrivateSize;
@@ -51,8 +53,8 @@ namespace ty::hooks
 		LARGE_INTEGER ReadTransferCount;
 		LARGE_INTEGER WriteTransferCount;
 		LARGE_INTEGER OtherTransferCount;
-	} S_SYSTEM_PROCESS_INFORMATION, * P_SYSTEM_PROCESS_INFORMATION;
-	
+	} S_SYSTEM_PROCESS_INFORMATION, *P_SYSTEM_PROCESS_INFORMATION;
+
 	// -------------------------------------------------------
 
 	// POINTERS TO UNHOOKED FUNCTIONS ------------------------
@@ -85,10 +87,8 @@ namespace ty::hooks
 	                                 HANDLE hTemplateFile);
 	extern BOOL check_foreground_window();
 	extern NTSTATUS WINAPI nt_query_system_information(SYSTEM_INFORMATION_CLASS SystemInformationClass,
-		PVOID SystemInformation,
-		ULONG SystemInformationLength,
-		PULONG ReturnLength);
+	                                                   PVOID SystemInformation,
+	                                                   ULONG SystemInformationLength,
+	                                                   PULONG ReturnLength);
 	// -------------------------------------------------------
-
-	
 }

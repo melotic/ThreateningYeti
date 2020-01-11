@@ -4,16 +4,16 @@
 #include <cstdio>
 #include <winternl.h>
 
-ty::hooks::cldb_do_some_stuff_t				ty::hooks::og_do_some_stuff					= nullptr;
-ty::hooks::cldb_do_some_other_stuff_t		ty::hooks::og_do_some_other_stuff			= nullptr;
-ty::hooks::cldb_do_yet_more_stuff_t			ty::hooks::og_do_yet_more_stuff				= nullptr;
-ty::hooks::disable_task_manager_t			ty::hooks::og_disable_task_manager			= nullptr;
-ty::hooks::empty_clipboard_t				ty::hooks::og_empty_clipboard				= nullptr;
-ty::hooks::on_cover_windows_t				ty::hooks::og_on_cover_windows				= nullptr;
-ty::hooks::lockdown_log_t					ty::hooks::og_lockdown_log					= nullptr;
-ty::hooks::create_file_t					ty::hooks::og_create_file					= nullptr;
-ty::hooks::check_foreground_window_t		ty::hooks::og_check_foreground_window		= nullptr;
-ty::hooks::nt_query_system_information_t	ty::hooks::og_nt_query_system_information	= nullptr;
+ty::hooks::cldb_do_some_stuff_t ty::hooks::og_do_some_stuff = nullptr;
+ty::hooks::cldb_do_some_other_stuff_t ty::hooks::og_do_some_other_stuff = nullptr;
+ty::hooks::cldb_do_yet_more_stuff_t ty::hooks::og_do_yet_more_stuff = nullptr;
+ty::hooks::disable_task_manager_t ty::hooks::og_disable_task_manager = nullptr;
+ty::hooks::empty_clipboard_t ty::hooks::og_empty_clipboard = nullptr;
+ty::hooks::on_cover_windows_t ty::hooks::og_on_cover_windows = nullptr;
+ty::hooks::lockdown_log_t ty::hooks::og_lockdown_log = nullptr;
+ty::hooks::create_file_t ty::hooks::og_create_file = nullptr;
+ty::hooks::check_foreground_window_t ty::hooks::og_check_foreground_window = nullptr;
+ty::hooks::nt_query_system_information_t ty::hooks::og_nt_query_system_information = nullptr;
 
 // Hooked implementations
 int _cdecl ty::hooks::do_some_stuff(int* a1)

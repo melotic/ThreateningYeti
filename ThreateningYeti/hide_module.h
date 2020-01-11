@@ -64,7 +64,7 @@ namespace ty
 			{
 				// get current module
 				const auto current = CONTAINING_RECORD(current_entry, LDR_MODULE, InLoadOrderModuleList);
-				
+
 				if (current->BaseAddress == hModule)
 				{
 					// unlink module from peb
@@ -99,7 +99,7 @@ namespace ty
 				VirtualProtect(module_base, size, PAGE_EXECUTE_READWRITE, &old_protect);
 				RtlSecureZeroMemory(module_base, size);
 				VirtualProtect(module_base, size, old_protect, &old_protect);
-				
+
 				return true;
 			}
 

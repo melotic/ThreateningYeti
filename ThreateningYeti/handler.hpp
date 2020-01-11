@@ -79,7 +79,7 @@ namespace ty
 				MH_CreateHookApi(L"ntdll.dll", "NtQuerySystemInformation", &hooks::nt_query_system_information, (void**)
 					&hooks::og_nt_query_system_information) == MH_OK, "Error hooking NtQuerySystemInformation");
 
-			
+
 			LOG_F(INFO, "Enabling Hooks");
 			MH_EnableHook(nullptr);
 		}
