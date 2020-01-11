@@ -71,17 +71,23 @@ int ty::hooks::on_cover_windows()
 
 
 // xref string "%02d:%02d:%02d.%03d - " --> function call with same parameter as strlen
-void ty::hooks::lockdown_log()
+void ty::hooks::lockdown_log(char* a1, ...)
 {
-	// the hooked function uses the _thiscall convention
-	// so its argument is in ECX
-	const char* msg;
-	_asm
-		{
-		mov msg, ecx
-		}
+	// seriously respoundus? lmfao
+
+	struct _SYSTEMTIME SystemTime{};
+	char msg[16368];
+	va_list va;
+
+	va_start(va, a1);
+	GetLocalTime(&SystemTime);
+	sprintf_s(static_cast<char*>(msg), 256, "%02d:%02d:%02d.%03d - ", SystemTime.wHour, SystemTime.wMinute,
+	          SystemTime.wSecond, SystemTime.wMilliseconds);
+	const auto v1 = strlen(msg);
+	_vsprintf_s_l(&msg[v1], 16368 - v1, a1, nullptr, va);
 
 	printf("[LOCKDOWN] %s\n", msg);
+	va_end(va);
 }
 
 HANDLE WINAPI ty::hooks::create_file(LPCSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode,

@@ -12,7 +12,7 @@ namespace ty::hooks
 	typedef LSTATUS (*disable_task_manager_t)(void*);
 	typedef decltype(&EmptyClipboard) empty_clipboard_t;
 	typedef int (*on_cover_windows_t)();
-	typedef void (*lockdown_log_t)();
+	typedef void (*lockdown_log_t)(char*, ...);
 	typedef decltype(&CreateFileA) create_file_t;
 	typedef BOOL (*check_foreground_window_t)();
 	typedef decltype(&NtQuerySystemInformation) nt_query_system_information_t;
@@ -77,7 +77,7 @@ namespace ty::hooks
 	extern LSTATUS disable_task_manager(void* a1);
 	extern BOOL empty_clipboard();
 	extern int on_cover_windows();
-	extern void lockdown_log();
+	extern void lockdown_log(char* a1, ...);
 	extern HANDLE WINAPI create_file(LPCSTR lpFileName,
 	                                 DWORD dwDesiredAccess,
 	                                 DWORD dwShareMode,

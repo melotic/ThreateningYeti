@@ -62,7 +62,7 @@ namespace ty
 				MH_CreateHook(LD_OFFSET(0x0386E0), &hooks::on_cover_windows, (void**)&hooks::og_on_cover_windows) ==
 				MH_OK, "Error hooking OnCoverWindows");
 #ifdef _DEBUG
-			CHECK_F(MH_CreateHook(LD_OFFSET(0x062580), &hooks::lockdown_log, (void**)&hooks::og_lockdown_log) == MH_OK,
+			CHECK_F(MH_CreateHook(LD_OFFSET(0x062760), &hooks::lockdown_log, (void**)&hooks::og_lockdown_log) == MH_OK,
 			        "Error hooking internal logging function");
 #endif
 			CHECK_F(
