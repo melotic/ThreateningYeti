@@ -14,6 +14,7 @@ ty::hooks::lockdown_log_t ty::hooks::og_lockdown_log = nullptr;
 ty::hooks::create_file_t ty::hooks::og_create_file = nullptr;
 ty::hooks::check_foreground_window_t ty::hooks::og_check_foreground_window = nullptr;
 ty::hooks::nt_query_system_information_t ty::hooks::og_nt_query_system_information = nullptr;
+WNDPROC ty::hooks::og_wnd_proc = nullptr;
 
 // Hooked implementations
 int _cdecl ty::hooks::do_some_stuff(int* a1)
@@ -156,4 +157,18 @@ NTSTATUS WINAPI ty::hooks::nt_query_system_information(SYSTEM_INFORMATION_CLASS 
 	}
 
 	return status;
+}
+
+LRESULT CALLBACK ty::hooks::wnd_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	// WM_SETFOCUS
+	// WM_ACTIVATEAPP
+	// 0x2B1
+	if (message == WM_SETFOCUS || message == WM_ACTIVATEAPP || message == 0x2B1)
+	{
+		LOG_F(WARNING, "Blocked lose focus message");
+		return 0;
+	}
+
+	return og_wnd_proc(hWnd, message, wParam, lParam);
 }

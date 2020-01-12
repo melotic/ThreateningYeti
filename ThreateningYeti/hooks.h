@@ -68,6 +68,7 @@ namespace ty::hooks
 	extern create_file_t og_create_file;
 	extern check_foreground_window_t og_check_foreground_window;
 	extern nt_query_system_information_t og_nt_query_system_information;
+	extern WNDPROC og_wnd_proc;
 	// -------------------------------------------------------
 
 	// HOOKED FUNCTIONS --------------------------------------
@@ -90,5 +91,7 @@ namespace ty::hooks
 	                                                   PVOID SystemInformation,
 	                                                   ULONG SystemInformationLength,
 	                                                   PULONG ReturnLength);
+
+	extern LRESULT CALLBACK wnd_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	// -------------------------------------------------------
 }

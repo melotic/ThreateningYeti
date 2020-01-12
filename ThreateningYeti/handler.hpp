@@ -68,6 +68,8 @@ namespace ty
 			CHECK_F(
 				MH_CreateHook(LD_OFFSET(0x05B410), &hooks::check_foreground_window, (void**)&hooks::
 					og_check_foreground_window) == MH_OK, "Error hooking check foreground window function");
+			CHECK_F(MH_CreateHook(LD_OFFSET(0x034540), &hooks::wnd_proc, (void**)&hooks::og_wnd_proc) == MH_OK,
+			        "Error hooking WndProc");
 
 			// hook winapi functions
 			LOG_F(INFO, "Hooking WinAPI functions");
@@ -78,7 +80,6 @@ namespace ty
 			CHECK_F(
 				MH_CreateHookApi(L"ntdll.dll", "NtQuerySystemInformation", &hooks::nt_query_system_information, (void**)
 					&hooks::og_nt_query_system_information) == MH_OK, "Error hooking NtQuerySystemInformation");
-
 
 			LOG_F(INFO, "Enabling Hooks");
 			MH_EnableHook(nullptr);
