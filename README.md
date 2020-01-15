@@ -1,5 +1,7 @@
 # ThreateningYeti
 
+[Download the latest version here](https://github.com/melotic/ThreateningYeti/releases/download/1.1/Release.zip)
+
 ThreateningYeti is a bypass designed for Repondus LockDown Browser. It consists of two projects, the injected DLL (ThreateningYeti) and the DLL Injector (YetiLoader).
 
 ThreateningYeti will hook many WinAPI functions and LockDown Browser's own functions to remove the restrictions of the browser. YetiLoader creates the LockDown Browser process and injects the DLL automatically.
@@ -13,6 +15,13 @@ ThreateningYeti will hook many WinAPI functions and LockDown Browser's own funct
 - LockDown Browser losing focus wont cause it to exit
 
 ## Usage
+
+1. Download the latest release from [here](https://github.com/melotic/ThreateningYeti/releases/download/1.1/Release.zip)
+2. Run YetiLoader.exe
+
+YetiLoader will automatically launch Lockdown Browser.
+
+## Build Instructions
 
 1. Install MinHook as a static package with [vcpkg](https://github.com/microsoft/vcpkg "vcpkg")
 2. Compile ThreateningYeti and YetiLoader
