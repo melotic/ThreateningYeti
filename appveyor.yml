@@ -1,12 +1,15 @@
 version: 1.0.{build}
 configuration: Release
 platform: x86
+
 build:
   verbosity: minimal
+  
 install:
-  cd C:\Tools\vcpkg
-  git pull
-  .\bootstrap-vcpkg.bat
-  vcpkg install minhook:x86-windows-static
-  cd %APPVEYOR_BUILD_FOLDER%
+- cd C:\Tools\vcpkg
+- git pull
+- .\bootstrap-vcpkg.bat
+- vcpkg install minhook:x86-windows-static
+- cd %APPVEYOR_BUILD_FOLDER%
+
 cache: c:\tools\vcpkg\installed\
