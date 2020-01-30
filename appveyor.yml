@@ -9,6 +9,7 @@ install:
 - cd C:\Tools\vcpkg
 - git pull
 - .\bootstrap-vcpkg.bat
+- vcpkg integrate install
 - vcpkg install minhook:x86-windows-static
 - cd %APPVEYOR_BUILD_FOLDER%
 
