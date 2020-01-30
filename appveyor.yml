@@ -13,4 +13,8 @@ install:
 - vcpkg install minhook:x86-windows-static
 - cd %APPVEYOR_BUILD_FOLDER%
 
+artifacts:
+- path: $(configuration)\ThreateningYeti.dll
+- path: $(configuration)\YetiLoader.exe
+
 cache: c:\tools\vcpkg\installed\
