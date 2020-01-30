@@ -16,5 +16,6 @@ install:
 artifacts:
 - path: $(configuration)\ThreateningYeti.dll
 - path: $(configuration)\YetiLoader.exe
+  type: zip
 
 cache: c:\tools\vcpkg\installed\
