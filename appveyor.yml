@@ -1,0 +1,21 @@
+version: 1.0.{build}
+configuration: Release
+platform: x86
+
+build:
+  verbosity: minimal
+  
+install:
+- cd C:\Tools\vcpkg
+- git pull
+- .\bootstrap-vcpkg.bat
+- vcpkg integrate install
+- vcpkg install minhook:x86-windows-static
+- cd %APPVEYOR_BUILD_FOLDER%
+
+artifacts:
+- path: $(configuration)\ThreateningYeti.dll
+- path: $(configuration)\YetiLoader.exe
+  type: zip
+
+cache: c:\tools\vcpkg\installed\
