@@ -1,6 +1,6 @@
 # ThreateningYeti
 
-[Download the latest version here](https://github.com/melotic/ThreateningYeti/releases/download/1.1/Release.zip)
+[Download the latest version here](https://github.com/melotic/ThreateningYeti/releases)
 
 ThreateningYeti is a bypass designed for Repondus LockDown Browser. It consists of two projects, the injected DLL (ThreateningYeti) and the DLL Injector (YetiLoader).
 
