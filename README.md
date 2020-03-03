@@ -17,7 +17,8 @@ ThreateningYeti will hook many WinAPI functions and LockDown Browser's own funct
 ## Usage
 
 1. Download the latest release from [here](https://github.com/melotic/ThreateningYeti/releases/download/1.1/Release.zip)
-2. Run YetiLoader.exe
+2. Ensure you're running the latest version of Lockdown Browser ([How-to](https://support.respondus.com/support/index.php?/Knowledgebase/Article/View/326/0/how-to-update-lockdown-browser))
+3. Run YetiLoader.exe
 
 YetiLoader will automatically launch Lockdown Browser.
 
