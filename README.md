@@ -1,4 +1,4 @@
-# ThreateningYeti
+# ThreateningYeti [![Build status](https://ci.appveyor.com/api/projects/status/l27pfn6pfyf07b0v?svg=true)](https://ci.appveyor.com/project/sup3rvis0r/threateningyeti)
 
 [Download the latest version here](https://github.com/melotic/ThreateningYeti/releases)
 
