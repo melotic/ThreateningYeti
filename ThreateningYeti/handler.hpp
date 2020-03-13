@@ -32,7 +32,7 @@ namespace ty
 			std::cout << " / / / / / / /  /  __/ /_/ / /_/  __/ / / / / / / / /_/ /      / /  __/ /_/ /  \n";
 			std::cout << "/_/ /_/ /_/_/   \\___/\\__,_/\\__/\\___/_/ /_/_/_/ /_/\\__, /      /_/\\___/\\__/_/   \n";
 			std::cout << "                                                 /____/                        \n";
-			std::cout << "\n\nVersion 1.2" << std::endl;
+			std::cout << "\n\nVersion 1.3" << std::endl;
 
 			loguru::g_colorlogtostderr = true;
 
@@ -55,20 +55,20 @@ namespace ty
 			// hook internal functions
 			LOG_F(INFO, "Initializing internal function hooks");
 			CHECK_F(
-				MH_CreateHook(LD_OFFSET(0x057370), &hooks::
+				MH_CreateHook(LD_OFFSET(0x057710), &hooks::
 					disable_task_manager, (void**)&hooks::og_disable_task_manager) == MH_OK,
 				"Error hooking disable task manager");
 			CHECK_F(
-				MH_CreateHook(LD_OFFSET(0x03A890), &hooks::on_cover_windows, (void**)&hooks::og_on_cover_windows) ==
+				MH_CreateHook(LD_OFFSET(0x03AD40), &hooks::on_cover_windows, (void**)&hooks::og_on_cover_windows) ==
 				MH_OK, "Error hooking OnCoverWindows");
 #ifdef _DEBUG
-			CHECK_F(MH_CreateHook(LD_OFFSET(0x064E10), &hooks::lockdown_log, (void**)&hooks::og_lockdown_log) == MH_OK,
+			CHECK_F(MH_CreateHook(LD_OFFSET(0x065810), &hooks::lockdown_log, (void**)&hooks::og_lockdown_log) == MH_OK,
 			        "Error hooking internal logging function");
 #endif
 			CHECK_F(
-				MH_CreateHook(LD_OFFSET(0x05DA70), &hooks::check_foreground_window, (void**)&hooks::
+				MH_CreateHook(LD_OFFSET(0x05E0A0), &hooks::check_foreground_window, (void**)&hooks::
 					og_check_foreground_window) == MH_OK, "Error hooking check foreground window function");
-			CHECK_F(MH_CreateHook(LD_OFFSET(0x025860), &hooks::wnd_proc, (void**)&hooks::og_wnd_proc) == MH_OK,
+			CHECK_F(MH_CreateHook(LD_OFFSET(0x025D70), &hooks::wnd_proc, (void**)&hooks::og_wnd_proc) == MH_OK,
 			        "Error hooking WndProc");
 
 			// hook winapi functions
