@@ -9,12 +9,12 @@ ty::hooks::cldb_do_some_other_stuff_t ty::hooks::og_do_some_other_stuff = nullpt
 ty::hooks::cldb_do_yet_more_stuff_t ty::hooks::og_do_yet_more_stuff = nullptr;
 ty::hooks::disable_task_manager_t ty::hooks::og_disable_task_manager = nullptr;
 ty::hooks::empty_clipboard_t ty::hooks::og_empty_clipboard = nullptr;
-ty::hooks::on_cover_windows_t ty::hooks::og_on_cover_windows = nullptr;
 ty::hooks::lockdown_log_t ty::hooks::og_lockdown_log = nullptr;
 ty::hooks::create_file_t ty::hooks::og_create_file = nullptr;
 ty::hooks::check_foreground_window_t ty::hooks::og_check_foreground_window = nullptr;
 ty::hooks::nt_query_system_information_t ty::hooks::og_nt_query_system_information = nullptr;
 WNDPROC ty::hooks::og_wnd_proc = nullptr;
+ty::hooks::get_monitor_info_t ty::hooks::og_get_monitor_info = nullptr;
 
 // Hooked implementations
 int _cdecl ty::hooks::do_some_stuff(int* a1)
@@ -62,14 +62,6 @@ BOOL ty::hooks::empty_clipboard()
 	LOG_F(WARNING, "blocked call to empty clipboard");
 	return TRUE;
 }
-
-// xref string "OnCoverWindows()"
-int ty::hooks::on_cover_windows()
-{
-	LOG_F(WARNING, "blocked call to OnCoverWindows()");
-	return ERROR_SUCCESS;
-}
-
 
 // xref string "%02d:%02d:%02d.%03d - " --> function call with same parameter as strlen
 void ty::hooks::lockdown_log(char* a1, ...)
@@ -172,3 +164,12 @@ LRESULT CALLBACK ty::hooks::wnd_proc(HWND hWnd, UINT message, WPARAM wParam, LPA
 
 	return og_wnd_proc(hWnd, message, wParam, lParam);
 }
+
+BOOL WINAPI ty::hooks::get_monitor_info(HMONITOR hMonitor, LPMONITORINFO lpmi)
+{
+	auto result = og_get_monitor_info(hMonitor, lpmi);
+	lpmi->dwFlags = 8;
+	
+	return result;
+}
+

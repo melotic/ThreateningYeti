@@ -38,48 +38,49 @@ namespace ty
 
 			LOG_F(INFO, "Threatening Yeti Loading");
 			LOG_F(INFO, "Base Address: 0x%p", hModule);
-			CHECK_F(MH_Initialize() == MH_OK, "Error initializing MinHook");
+			CHECK_F(!MH_Initialize(), "Error initializing MinHook");
 
 			// init cldb hooks
 			LOG_F(INFO, "Initializing CLDB hooks");
 			CHECK_F(
-				MH_CreateHookApi(L"LockDownBrowser.dll", "?CLDBDoSomeStuff@@YAHPAH@Z", &hooks::do_some_stuff, (void**) &
-					hooks::og_do_some_stuff) == MH_OK, "Error hooking CLDBDOSomeStuff");
+				!MH_CreateHookApi(L"LockDownBrowser.dll", "?CLDBDoSomeStuff@@YAHPAH@Z", &hooks::do_some_stuff, (void**)
+					&
+					hooks::og_do_some_stuff), "Error hooking CLDBDOSomeStuff");
 			CHECK_F(
 				MH_CreateHookApi(L"LockDownBrowser.dll", "?CLDBDoSomeOtherStuff@@YAHPAH@Z", &hooks::do_some_other_stuff,
-					(void**)&hooks::og_do_some_other_stuff) == MH_OK, "Error hooking CLDSoSomeOtherStuff");
+					(void**)&hooks::og_do_some_other_stuff), "Error hooking CLDSoSomeOtherStuff");
 			CHECK_F(
 				MH_CreateHookApi(L"LockDownBrowser.dll", "?CLDBDoYetMoreStuff@@YAHPAH@Z", &hooks::do_yet_more_stuff, (
-					void**)&hooks::og_do_yet_more_stuff) == MH_OK, "Error hooking CLDBDoYetMoreStuff");
+					void**)&hooks::og_do_yet_more_stuff), "Error hooking CLDBDoYetMoreStuff");
 
 			// hook internal functions
 			LOG_F(INFO, "Initializing internal function hooks");
 			CHECK_F(
-				MH_CreateHook(LD_OFFSET(0x057710), &hooks::
-					disable_task_manager, (void**)&hooks::og_disable_task_manager) == MH_OK,
+				!MH_CreateHook(LD_OFFSET(0x057710), &hooks::
+					disable_task_manager, (void**)&hooks::og_disable_task_manager),
 				"Error hooking disable task manager");
-			CHECK_F(
-				MH_CreateHook(LD_OFFSET(0x03AD40), &hooks::on_cover_windows, (void**)&hooks::og_on_cover_windows) ==
-				MH_OK, "Error hooking OnCoverWindows");
 #ifdef _DEBUG
-			CHECK_F(MH_CreateHook(LD_OFFSET(0x065810), &hooks::lockdown_log, (void**)&hooks::og_lockdown_log) == MH_OK,
+			CHECK_F(!MH_CreateHook(LD_OFFSET(0x065810), &hooks::lockdown_log, (void**)&hooks::og_lockdown_log),
 			        "Error hooking internal logging function");
 #endif
 			CHECK_F(
-				MH_CreateHook(LD_OFFSET(0x05E0A0), &hooks::check_foreground_window, (void**)&hooks::
-					og_check_foreground_window) == MH_OK, "Error hooking check foreground window function");
-			CHECK_F(MH_CreateHook(LD_OFFSET(0x025D70), &hooks::wnd_proc, (void**)&hooks::og_wnd_proc) == MH_OK,
+				!MH_CreateHook(LD_OFFSET(0x05E0A0), &hooks::check_foreground_window, (void**)&hooks::
+					og_check_foreground_window), "Error hooking check foreground window function");
+			CHECK_F(!MH_CreateHook(LD_OFFSET(0x025D70), &hooks::wnd_proc, (void**)&hooks::og_wnd_proc),
 			        "Error hooking WndProc");
 
 			// hook winapi functions
 			LOG_F(INFO, "Hooking WinAPI functions");
-			CHECK_F(MH_CreateHook(&EmptyClipboard, &hooks::empty_clipboard, (void**)hooks::og_empty_clipboard) == MH_OK,
+			CHECK_F(!MH_CreateHook(&EmptyClipboard, &hooks::empty_clipboard, (void**)hooks::og_empty_clipboard),
 			        "Error hooking EmptyClipboard");
-			CHECK_F(MH_CreateHook(&CreateFileA, &hooks::create_file, (void**)&hooks::og_create_file) == MH_OK,
+			CHECK_F(!MH_CreateHook(&CreateFileA, &hooks::create_file, (void**)&hooks::og_create_file),
 			        "Error hooking CreateFileA");
+			CHECK_F(!MH_CreateHook(&GetMonitorInfoW, &hooks::get_monitor_info, (void**)&hooks::og_get_monitor_info),
+			        "Error hooking GetMonitorInfoW");
 			CHECK_F(
-				MH_CreateHookApi(L"ntdll.dll", "NtQuerySystemInformation", &hooks::nt_query_system_information, (void**)
-					&hooks::og_nt_query_system_information) == MH_OK, "Error hooking NtQuerySystemInformation");
+				!MH_CreateHookApi(L"ntdll.dll", "NtQuerySystemInformation", &hooks::nt_query_system_information, (void**)
+					&hooks::og_nt_query_system_information), "Error hooking NtQuerySystemInformation");
+
 
 			LOG_F(INFO, "Enabling Hooks");
 			MH_EnableHook(nullptr);
