@@ -15,6 +15,7 @@ ty::hooks::check_foreground_window_t ty::hooks::og_check_foreground_window = nul
 ty::hooks::nt_query_system_information_t ty::hooks::og_nt_query_system_information = nullptr;
 WNDPROC ty::hooks::og_wnd_proc = nullptr;
 ty::hooks::get_monitor_info_t ty::hooks::og_get_monitor_info = nullptr;
+ty::hooks::lockdown_check_vm_t ty::hooks::og_check_vm = nullptr;
 
 // Hooked implementations
 int _cdecl ty::hooks::do_some_stuff(int* a1)
@@ -59,7 +60,7 @@ LSTATUS ty::hooks::disable_task_manager(void* a1)
 
 BOOL ty::hooks::empty_clipboard()
 {
-	LOG_F(WARNING, "blocked call to empty clipboard");
+	LOG_F(WARNING, "blocked call to empty clipboard"); 
 	return TRUE;
 }
 
@@ -171,5 +172,12 @@ BOOL WINAPI ty::hooks::get_monitor_info(HMONITOR hMonitor, LPMONITORINFO lpmi)
 	lpmi->dwFlags = 8;
 	
 	return result;
+}
+
+int ty::hooks::check_vm()
+{
+	LOG_F(WARNING, "Blocked call to check VM");
+	// return value not checked
+	return FALSE;
 }
 

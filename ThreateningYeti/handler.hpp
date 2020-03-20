@@ -47,10 +47,10 @@ namespace ty
 					&
 					hooks::og_do_some_stuff), "Error hooking CLDBDOSomeStuff");
 			CHECK_F(
-				MH_CreateHookApi(L"LockDownBrowser.dll", "?CLDBDoSomeOtherStuff@@YAHPAH@Z", &hooks::do_some_other_stuff,
+				!MH_CreateHookApi(L"LockDownBrowser.dll", "?CLDBDoSomeOtherStuff@@YAHPAH@Z", &hooks::do_some_other_stuff,
 					(void**)&hooks::og_do_some_other_stuff), "Error hooking CLDSoSomeOtherStuff");
 			CHECK_F(
-				MH_CreateHookApi(L"LockDownBrowser.dll", "?CLDBDoYetMoreStuff@@YAHPAH@Z", &hooks::do_yet_more_stuff, (
+				!MH_CreateHookApi(L"LockDownBrowser.dll", "?CLDBDoYetMoreStuff@@YAHPAH@Z", &hooks::do_yet_more_stuff, (
 					void**)&hooks::og_do_yet_more_stuff), "Error hooking CLDBDoYetMoreStuff");
 
 			// hook internal functions
@@ -68,6 +68,7 @@ namespace ty
 					og_check_foreground_window), "Error hooking check foreground window function");
 			CHECK_F(!MH_CreateHook(LD_OFFSET(0x025D70), &hooks::wnd_proc, (void**)&hooks::og_wnd_proc),
 			        "Error hooking WndProc");
+			CHECK_F(!MH_CreateHook(LD_OFFSET(0x0557A0), &hooks::check_vm, (void**) &hooks::og_check_vm), "Error hooking check vm");
 
 			// hook winapi functions
 			LOG_F(INFO, "Hooking WinAPI functions");

@@ -16,6 +16,7 @@ namespace ty::hooks
 	typedef BOOL (*check_foreground_window_t)();
 	typedef decltype(&NtQuerySystemInformation) nt_query_system_information_t;
 	typedef decltype(&GetMonitorInfoW) get_monitor_info_t;
+	typedef int (*lockdown_check_vm_t)();
 
 	typedef struct __SYSTEM_PROCESS_INFORMATION
 	{
@@ -69,6 +70,7 @@ namespace ty::hooks
 	extern nt_query_system_information_t og_nt_query_system_information;
 	extern WNDPROC og_wnd_proc;
 	extern get_monitor_info_t og_get_monitor_info;
+	extern lockdown_check_vm_t og_check_vm;
 	// -------------------------------------------------------
 
 	// HOOKED FUNCTIONS --------------------------------------
@@ -94,5 +96,6 @@ namespace ty::hooks
 	extern LRESULT CALLBACK wnd_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	extern BOOL WINAPI get_monitor_info(HMONITOR      hMonitor,
 		LPMONITORINFO lpmi);
+	extern int check_vm();
 	// -------------------------------------------------------
 }
