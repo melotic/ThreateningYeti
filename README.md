@@ -22,6 +22,14 @@ ThreateningYeti will hook many WinAPI functions and LockDown Browser's own funct
 
 YetiLoader will automatically launch Lockdown Browser.
 
+## Donations
+If you're a fan of the project and would like to buy me a coffee, here's how you can donate.
+
+BTC: 3CGvzEKd8kq8yQQTDmxa6H4PzBvZ9Gw2Nc
+ETH: 0x979e8276a2BD50801afe3A02B8a072Ce53c545fF
+
+If you want to donate with PayPal, please click the Sponsor button on top!
+
 ## Build Instructions
 
 1. Install MinHook as a static package with [vcpkg](https://github.com/microsoft/vcpkg "vcpkg")
