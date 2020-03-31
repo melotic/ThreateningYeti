@@ -66,7 +66,7 @@ namespace ty
 			CHECK_F(
 				!MH_CreateHook(LD_OFFSET(0x05F200), &hooks::check_foreground_window, (void**)&hooks::
 					og_check_foreground_window), "Error hooking check foreground window function");
-			CHECK_F(!MH_CreateHook(LD_OFFSET(0x025EB0), &hooks::wnd_proc, (void**)&hooks::og_wnd_proc),
+			CHECK_F(!MH_CreateHook(LD_OFFSET(0x036C60), &hooks::wnd_proc, (void**)&hooks::og_wnd_proc),
 			        "Error hooking WndProc");
 			CHECK_F(!MH_CreateHook(LD_OFFSET(0x0568F0), &hooks::check_vm, (void**) &hooks::og_check_vm), "Error hooking check vm");
 
