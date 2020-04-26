@@ -32,7 +32,7 @@ namespace ty
 			std::cout << " / / / / / / /  /  __/ /_/ / /_/  __/ / / / / / / / /_/ /      / /  __/ /_/ /  \n";
 			std::cout << "/_/ /_/ /_/_/   \\___/\\__,_/\\__/\\___/_/ /_/_/_/ /_/\\__, /      /_/\\___/\\__/_/   \n";
 			std::cout << "                                                 /____/                        \n";
-			std::cout << "\n\nVersion 1.4 for LDB 2.06.03" << std::endl;
+			std::cout << "\n\nVersion 1.5 for LDB 2.06.05" << std::endl;
 
 			loguru::g_colorlogtostderr = true;
 
@@ -56,7 +56,7 @@ namespace ty
 			// hook internal functions
 			LOG_F(INFO, "Initializing internal function hooks");
 			CHECK_F(
-				!MH_CreateHook(LD_OFFSET(0x058860), &hooks::
+				!MH_CreateHook(LD_OFFSET(0x058E90), &hooks::
 					disable_task_manager, (void**)&hooks::og_disable_task_manager),
 				"Error hooking disable task manager");
 #ifdef _DEBUG
@@ -64,11 +64,11 @@ namespace ty
 			        "Error hooking internal logging function");
 #endif
 			CHECK_F(
-				!MH_CreateHook(LD_OFFSET(0x05F200), &hooks::check_foreground_window, (void**)&hooks::
+				!MH_CreateHook(LD_OFFSET(0x05F820), &hooks::check_foreground_window, (void**)&hooks::
 					og_check_foreground_window), "Error hooking check foreground window function");
-			CHECK_F(!MH_CreateHook(LD_OFFSET(0x036C60), &hooks::wnd_proc, (void**)&hooks::og_wnd_proc),
+			CHECK_F(!MH_CreateHook(LD_OFFSET(0x036ED0), &hooks::wnd_proc, (void**)&hooks::og_wnd_proc),
 			        "Error hooking WndProc");
-			CHECK_F(!MH_CreateHook(LD_OFFSET(0x0568F0), &hooks::check_vm, (void**) &hooks::og_check_vm), "Error hooking check vm");
+			CHECK_F(!MH_CreateHook(LD_OFFSET(0x056F20), &hooks::check_vm, (void**) &hooks::og_check_vm), "Error hooking check vm");
 
 			// hook winapi functions
 			LOG_F(INFO, "Hooking WinAPI functions");

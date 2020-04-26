@@ -60,7 +60,7 @@ LSTATUS ty::hooks::disable_task_manager(void* a1)
 
 BOOL ty::hooks::empty_clipboard()
 {
-	LOG_F(WARNING, "blocked call to empty clipboard"); 
+	LOG_F(WARNING, "blocked call to empty clipboard");
 	return TRUE;
 }
 
@@ -102,6 +102,14 @@ HANDLE WINAPI ty::hooks::create_file(LPCSTR lpFileName, DWORD dwDesiredAccess, D
 // xref string "ASC - "
 BOOL ty::hooks::check_foreground_window()
 {
+	_asm
+	{
+		push 0
+		call GetModuleHandleW
+		mov eax, [eax + 0x124DC8]
+		inc dword ptr[eax + 0x8FA8]
+	}
+	
 	return TRUE;
 }
 
@@ -170,14 +178,22 @@ BOOL WINAPI ty::hooks::get_monitor_info(HMONITOR hMonitor, LPMONITORINFO lpmi)
 {
 	auto result = og_get_monitor_info(hMonitor, lpmi);
 	lpmi->dwFlags = 8;
-	
+
 	return result;
 }
 
 int ty::hooks::check_vm()
 {
-	LOG_F(WARNING, "Blocked call to check VM");
-	// return value not checked
+	LOG_F(WARNING, "Blocked call to check VM - faked call count");
+
+	// its 3 am and im too lazy
+	_asm
+	{
+		push 0
+		call GetModuleHandleW
+		mov eax, [eax + 0x124DC8]
+		inc dword ptr [eax + 0x8FA4]
+	}
+	
 	return FALSE;
 }
-
