@@ -9,6 +9,7 @@ namespace ty::hooks
 	typedef int (*cldb_do_some_stuff_t)(int*);
 	typedef BOOL (*cldb_do_some_other_stuff_t)(int*);
 	typedef BOOL (*cldb_do_yet_more_stuff_t)();
+	typedef int (*cldb_do_some_other_stuff_s_t)(int*);
 	typedef LSTATUS (*disable_task_manager_t)(void*);
 	typedef decltype(&EmptyClipboard) empty_clipboard_t;
 	typedef void (*lockdown_log_t)(char*, ...);
@@ -62,6 +63,7 @@ namespace ty::hooks
 	extern cldb_do_some_stuff_t og_do_some_stuff;
 	extern cldb_do_some_other_stuff_t og_do_some_other_stuff;
 	extern cldb_do_yet_more_stuff_t og_do_yet_more_stuff;
+	extern cldb_do_some_other_stuff_s_t og_do_some_other_stuff_s;
 	extern disable_task_manager_t og_disable_task_manager;
 	extern empty_clipboard_t og_empty_clipboard;
 	extern lockdown_log_t og_lockdown_log;
@@ -77,6 +79,7 @@ namespace ty::hooks
 	extern int do_some_stuff(int* a1);
 	extern bool do_some_other_stuff(int* a1);
 	extern bool do_yet_more_stuff();
+	extern int do_some_other_stuff_s(int * a1);
 	extern LSTATUS disable_task_manager(void* a1);
 	extern BOOL empty_clipboard();
 	extern void lockdown_log(char* a1, ...);

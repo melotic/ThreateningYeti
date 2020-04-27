@@ -47,11 +47,16 @@ namespace ty
 					&
 					hooks::og_do_some_stuff), "Error hooking CLDBDOSomeStuff");
 			CHECK_F(
-				!MH_CreateHookApi(L"LockDownBrowser.dll", "?CLDBDoSomeOtherStuff@@YAHPAH@Z", &hooks::do_some_other_stuff,
+				!MH_CreateHookApi(L"LockDownBrowser.dll", "?CLDBDoSomeOtherStuff@@YAHPAH@Z", &hooks::do_some_other_stuff
+					,
 					(void**)&hooks::og_do_some_other_stuff), "Error hooking CLDSoSomeOtherStuff");
 			CHECK_F(
 				!MH_CreateHookApi(L"LockDownBrowser.dll", "?CLDBDoYetMoreStuff@@YAHPAH@Z", &hooks::do_yet_more_stuff, (
 					void**)&hooks::og_do_yet_more_stuff), "Error hooking CLDBDoYetMoreStuff");
+			CHECK_F(
+				!MH_CreateHookApi(L"LockDownBrowser.dll", "?CLDBDoSomeOtherStuffs@@YAHPAH@Z", &hooks::
+					do_some_other_stuff_s, (void**)&hooks::og_do_some_other_stuff_s),
+				"Error hooking CLDBDosomeOtherStuffs");
 
 			// hook internal functions
 			LOG_F(INFO, "Initializing internal function hooks");
@@ -68,7 +73,8 @@ namespace ty
 					og_check_foreground_window), "Error hooking check foreground window function");
 			CHECK_F(!MH_CreateHook(LD_OFFSET(0x036ED0), &hooks::wnd_proc, (void**)&hooks::og_wnd_proc),
 			        "Error hooking WndProc");
-			CHECK_F(!MH_CreateHook(LD_OFFSET(0x056F20), &hooks::check_vm, (void**) &hooks::og_check_vm), "Error hooking check vm");
+			CHECK_F(!MH_CreateHook(LD_OFFSET(0x056F20), &hooks::check_vm, (void**) &hooks::og_check_vm),
+			        "Error hooking check vm");
 
 			// hook winapi functions
 			LOG_F(INFO, "Hooking WinAPI functions");
@@ -79,7 +85,8 @@ namespace ty
 			CHECK_F(!MH_CreateHook(&GetMonitorInfoW, &hooks::get_monitor_info, (void**)&hooks::og_get_monitor_info),
 			        "Error hooking GetMonitorInfoW");
 			CHECK_F(
-				!MH_CreateHookApi(L"ntdll.dll", "NtQuerySystemInformation", &hooks::nt_query_system_information, (void**)
+				!MH_CreateHookApi(L"ntdll.dll", "NtQuerySystemInformation", &hooks::nt_query_system_information, (void**
+					)
 					&hooks::og_nt_query_system_information), "Error hooking NtQuerySystemInformation");
 
 

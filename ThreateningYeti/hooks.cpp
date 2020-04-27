@@ -7,6 +7,7 @@
 ty::hooks::cldb_do_some_stuff_t ty::hooks::og_do_some_stuff = nullptr;
 ty::hooks::cldb_do_some_other_stuff_t ty::hooks::og_do_some_other_stuff = nullptr;
 ty::hooks::cldb_do_yet_more_stuff_t ty::hooks::og_do_yet_more_stuff = nullptr;
+ty::hooks::cldb_do_some_other_stuff_s_t ty::hooks::og_do_some_other_stuff_s = nullptr;
 ty::hooks::disable_task_manager_t ty::hooks::og_disable_task_manager = nullptr;
 ty::hooks::empty_clipboard_t ty::hooks::og_empty_clipboard = nullptr;
 ty::hooks::lockdown_log_t ty::hooks::og_lockdown_log = nullptr;
@@ -50,6 +51,13 @@ bool _cdecl ty::hooks::do_yet_more_stuff()
 	LOG_F(WARNING, "blocked CLDBDoYetMoreStuff()");
 	return TRUE;
 }
+
+int _cdecl ty::hooks::do_some_other_stuff_s(int* a1)
+{
+	// todo emulate dll calls to calculate proper ret value
+	return 1024 + 4096 + 2048;
+}
+
 
 // xref string "DisableTaskMgr"
 LSTATUS ty::hooks::disable_task_manager(void* a1)
