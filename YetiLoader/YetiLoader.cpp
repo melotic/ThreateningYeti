@@ -21,19 +21,6 @@ BOOL file_exists(LPCWSTR file)
 	return TRUE;
 }
 
-// converts a std::string to an std::wstring
-std::wstring s2ws(const std::string& s) {
-	int len;
-	int slength = (int)s.length() + 1;
-	len = MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, 0, 0);
-	wchar_t* buf = new wchar_t[len];
-	MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, buf, len);
-	std::wstring r(buf);
-	delete[] buf;
-	return r;
-}
-
-
 int main(int argc, char** argv)
 {
 	std::cout << "\n";
@@ -58,12 +45,11 @@ int main(int argc, char** argv)
 	std::cout <<
 		"                                                                                                             \n";
 	std::cout <<
-		"                                                     BROWSER URI EDITION                                     \n";
-	std::cout <<
 		"                                                                                                             \n";
+	std::cout << "";
 
 	loguru::init(argc, argv);
-	LOG_F(INFO, "YetiLoader {(Browser URI Edition)} Version 1.0");
+	LOG_F(INFO, "YetiLoader Version 1.0");
 
 	// get full path to dll
 	const auto ty_dll = L"ThreateningYeti.dll";
@@ -81,24 +67,23 @@ int main(int argc, char** argv)
 	}
 
 	// find path to lockdown, and prompt user if we cant find it
-	auto ld_exe = L"C:\\Program Files (x86)\\Respondus\\LockDown Browser\\LockDownBrowserOEM.exe";
+	auto ld_exe = L"C:\\Program Files (x86)\\Respondus\\LockDown Browser\\LockDownBrowser.exe";
 
 	if (!file_exists(ld_exe))
 	{
 		// prompt user to select where their lockdown browser installation is
 		LOG_F(WARNING, "Could not find LockDownBrowser executable");
 		OPENFILENAMEW ofn;
-		WCHAR szFile[MAX_PATH] = { 0 };
+		WCHAR szFile[MAX_PATH] = {0};
 
 		ZeroMemory(&ofn, sizeof(ofn));
 		ofn.lStructSize = sizeof(ofn);
 		ofn.hwndOwner = nullptr;
 		ofn.lpstrFile = szFile;
 		ofn.nMaxFile = sizeof(szFile);
-		ofn.lpstrFilter = L"LockDownBrowserOEM\0LockDownBrowserOEM.exe;LockDownBrowser.exe\0\0";
+		ofn.lpstrFilter = L"LockDownBrowser\0LockDownBrowser.exe\0\0";
 		ofn.nFilterIndex = 1;
-		// supports both LockDownBrowser and LockDownBrowserOEM
-		ofn.lpstrTitle = L"Browse to LockDownBrowserOEM.exe or LockDownBrowser.exe";
+		ofn.lpstrTitle = L"Browse to LockDownBrowser.exe";
 		ofn.lpstrInitialDir = nullptr;
 		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
 
@@ -112,7 +97,7 @@ int main(int argc, char** argv)
 		}
 	}
 
-	LOG_F(INFO, "Found LockDownBrowserOEM -> %ls", ld_exe);
+	LOG_F(INFO, "Found LockDownBrowser -> %ls", ld_exe);
 
 	// Extract directory from full path
 	WCHAR path[MAX_PATH];
@@ -126,33 +111,10 @@ int main(int argc, char** argv)
 	ZeroMemory(&pi, sizeof(pi));
 	si.cb = sizeof(si);
 
-	// add support for LDB URIs
-	std::wstring ld_input_str = L"";
-
-	char c;
-	std::cout << "\nDo you normally open lockdown browser from a website? Type -> (Y/N):";
-
-	std::cin >> c;
-	if (toupper(c) == 'Y') {
-		std::cout << "\nPlease enter the URL for the lockdown browser, this is usually found by copying the address of the button that would normally open lockdown browser. For example \"Start Test\" or whatever:";
-
-		// get user input
-		std::wcin >> ld_input_str;
-
-		// convert wstring to LPWSTR
-		LPWSTR ld_input = const_cast<LPWSTR>(ld_input_str.c_str());
-
-		// Create the process suspended (with our URI as an argument)
-		CHECK_F(CreateProcessW(ld_exe, ld_input, NULL, NULL, false, CREATE_SUSPENDED, NULL, path, &si, &pi) == TRUE,
-			"Failed to create the LockDownBrowserOEM process. Try running as Admin and make sure you entered the correct URL.");
-		LOG_F(INFO, "Created process");
-	}
-	else {
-		// Create the process suspended (in normal mode)
-		CHECK_F(CreateProcessW(ld_exe, NULL, NULL, NULL, false, CREATE_SUSPENDED, NULL, path, &si, &pi) == TRUE,
-			"Failed to create the LockDownBrowserOEM process. Try running as Admin.");
-		LOG_F(INFO, "Created process");
-	}
+	// Create the process suspended
+	CHECK_F(CreateProcessW(ld_exe, NULL, NULL, NULL, false, CREATE_SUSPENDED, NULL, path, &si, &pi) == TRUE,
+	        "Failed to create the LockDownBrowser process. Try running as Admin.");
+	LOG_F(INFO, "Created process");
 
 	/*
 	 * Inject the dll. We will create a remote thread that calls loadlibrary on our dll
@@ -165,7 +127,7 @@ int main(int argc, char** argv)
 
 	// allocate memory for dll string
 	const auto ll_arg_mem = VirtualAllocEx(pi.hProcess, nullptr, wcslen(ty_dll_full) * sizeof(wchar_t) + 1,
-		MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
+	                                       MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
 	CHECK_F(ll_arg_mem != NULL, "Could not allocate memory for LoadLibrary argument");
 	LOG_F(INFO, "LoadLibraryW Arg: 0x%p", ll_arg_mem);
 
@@ -173,7 +135,7 @@ int main(int argc, char** argv)
 	CHECK_F(WriteProcessMemory(pi.hProcess, ll_arg_mem, ty_dll_full, wcslen(ty_dll_full) * sizeof(wchar_t) + 1, NULL) == TRUE);
 
 	const auto h_thread = CreateRemoteThread(pi.hProcess, nullptr, NULL, static_cast<LPTHREAD_START_ROUTINE>(ll_addr),
-		ll_arg_mem, NULL, nullptr);
+	                                         ll_arg_mem, NULL, nullptr);
 	CHECK_F(h_thread != nullptr, "Error creating remote thread");
 	LOG_F(INFO, "Error Code: %lu", GetLastError());
 
