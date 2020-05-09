@@ -45,12 +45,11 @@ int main(int argc, char** argv)
 	std::cout <<
 		"                                                                                                             \n";
 	std::cout <<
-		"                                                     BROWSER URI EDITION                                     \n";
-	std::cout <<
 		"                                                                                                             \n";
-
+	std::cout << "";
+	
 	loguru::init(argc, argv);
-	LOG_F(INFO, "YetiLoader {(Browser URI Edition)} Version 1.0");
+	LOG_F(INFO, "YetiLoader Version 1.0");
 
 	// get full path to dll
 	const auto ty_dll = L"ThreateningYeti.dll";
@@ -68,7 +67,7 @@ int main(int argc, char** argv)
 	}
 
 	// find path to lockdown, and prompt user if we cant find it
-	auto ld_exe = L"C:\\Program Files (x86)\\Respondus\\LockDown Browser\\LockDownBrowserOEM.exe";
+	auto ld_exe = L"C:\\Program Files (x86)\\Respondus\\LockDown Browser\\LockDownBrowser.exe";
 
 	if (!file_exists(ld_exe))
 	{
